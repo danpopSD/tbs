@@ -1,5 +1,7 @@
 # Guide
 
+### CROSSPLANE
+
 1. Install Crossplane
 
 ```
@@ -60,3 +62,30 @@ kubectl get secret eks-conn -o=jsonpath={.data.kubeconfig} | base64 --decode > e
 kubectl get nodes --kubeconfig=gke.kube
 kubectl get nodes --kubeconfig=eks.kube
 ```
+
+# FALCO/SYSDIG
+### Falco 
+1. Install Falco (in this case using helm): https://github.com/falcosecurity/charts/tree/master/falco
+```
+helm install falco falcosecurity/falco --set ebpf.enabled=true
+```
+2. Tail the falco pods logs (in one terminal)
+```
+kubectl logs -l app=falco -f
+```
+3. attack a POD! (In another)
+```
+kubectl exec -it *podname* bash
+cd /bin
+touch fakeexe
+```
+
+4. Uninstall Falco (in this case using helm): 
+```
+helm uninstall falco
+```
+
+### Sysdig
+6. Lets Install Sysdig (Sign up for a free trial here): https://sysdig.com/company/free-trial/
+
+
